@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
+import ViewData from "./pages/ViewData";
+
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/upload" element={<UploadData />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/view" element={<ViewData />} />
+        <Route path="/" element={<Dashboard />} />
       </Routes>
     </Router>
   );
