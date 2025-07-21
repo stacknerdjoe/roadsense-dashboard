@@ -11,7 +11,7 @@ const ViewData = () => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await fetch("http://localhost:5000/api/data", {
+        const res = await fetch("https://roadsense-backend-enlj.onrender.com/api/data", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const result = await res.json();
