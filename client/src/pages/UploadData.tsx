@@ -15,7 +15,7 @@ const UploadData = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("https://roadsense-dashboard.onrender.com/api/upload", {
+      const response = await fetch("https://roadsense-backend-enlj.onrender.com/api/upload", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`, // ✅ Auth header
