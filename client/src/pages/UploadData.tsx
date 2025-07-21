@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const UploadData = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
-  const [parsedData, setParsedData] = useState<any[]>([]); // Initialize as array
+  const [parsedData, setParsedData] = useState<any[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,19 +15,20 @@ const UploadData = () => {
     const token = localStorage.getItem("token");
 
     try {
-        const response = await fetch("http://localhost:5000/api/upload", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`, // 🛡 Send token
-            },
-            body: formData,
+      const response = await fetch("https://roadsense-dashboard.onrender.com/api/upload", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ Auth header
+        },
+        body: formData,
       });
 
       const result = await response.json();
       console.log("Parsed result:", result);
+
       if (response.ok) {
         setMessage("✅ File uploaded and parsed successfully!");
-        setParsedData(result.data); // Store parsed CSV rows
+        setParsedData(result.data || []);
       } else {
         setMessage("❌ Upload failed: " + result.message);
         setParsedData([]);
@@ -53,7 +54,6 @@ const UploadData = () => {
 
       {message && <p>{message}</p>}
 
-      {/* ✅ Safely render table if parsedData is a valid array */}
       {Array.isArray(parsedData) && parsedData.length > 0 && (
         <table border={1} cellPadding={8} style={{ marginTop: "2rem", width: "100%" }}>
           <thead>
@@ -66,7 +66,7 @@ const UploadData = () => {
           <tbody>
             {parsedData.map((row, index) => (
               <tr key={index}>
-                {Object.values(row).map((value: unknown, i) => (
+                {Object.values(row).map((value, i) => (
                   <td key={i}>{String(value)}</td>
                 ))}
               </tr>
